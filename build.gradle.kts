@@ -30,6 +30,6 @@ subprojects {
     }
 
     dependencies {
-        add("testRuntimeOnly", "org.junit.platform:junit-platform-launcher")
+        add("testRuntimeOnly", "org.junit.platform:junit-platform-launcher:1.10.3")
     }
 }

@@ -23,8 +23,8 @@ jobs:
 
       - uses: actions/setup-java@v4
         with:
-          distribution: openjdk # change based on local java
-          java-version: 22      # local version
+          distribution: temurin
+          java-version: 22
 
       - uses: gradle/actions/setup-gradle@v3
 
