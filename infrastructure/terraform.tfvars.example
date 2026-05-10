@@ -1,0 +1,8 @@
+# Copy to terraform.tfvars (which is gitignored) and fill in your values.
+
+aws_region          = "eu-west-2"
+environment         = "prod"
+domain_name         = "habits.example.com"
+acm_certificate_arn = "arn:aws:acm:eu-west-2:000000000000:certificate/abcdefgh-1234-5678-90ab-cdef12345678"
+image_tag           = "latest"
+db_instance_class   = "db.t4g.micro"

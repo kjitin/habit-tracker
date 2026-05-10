@@ -1,0 +1,77 @@
+spring:
+  application:
+    name: habit-service
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/habits}
+    username: ${SPRING_DATASOURCE_USERNAME:habits}
+    password: ${SPRING_DATASOURCE_PASSWORD:habits}
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      connection-timeout: 5000
+      max-lifetime: 1800000
+      leak-detection-threshold: 60000
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        jdbc.time_zone: UTC
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+
+server:
+  port: 8080
+  shutdown: graceful
+
+management:
+  server:
+    port: 8081
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: when_authorized
+      probes:
+        enabled: true
+  metrics:
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
+      percentiles:
+        http.server.requests: 0.5, 0.95, 0.99
+    tags:
+      application: habit-service
+
+app:
+  jwt:
+    secret: ${JWT_SECRET}
+    issuer: ${JWT_ISSUER:habit-tracker}
+    access-token-lifetime: PT1H
+  events:
+    queue-name: ${EVENTS_QUEUE_NAME:habit-events}
+
+---
+# Local dev: use in-memory repos, no DB or SQS required.
+spring:
+  config:
+    activate:
+      on-profile: dev-local
+  jpa:
+    hibernate:
+      ddl-auto: none
+  flyway:
+    enabled: false
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+      - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+      - io.awspring.cloud.autoconfigure.sqs.SqsAutoConfiguration
+app:
+  jwt:
+    secret: this-is-a-fake-secret-of-at-least-32-chars-long
+    issuer: habit-tracker-dev-local
