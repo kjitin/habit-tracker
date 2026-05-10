@@ -50,15 +50,15 @@ curl -X POST http://localhost:8080/api/v1/auth/register \
   -d '{"email":"me@example.com","password":"hunter12345","displayName":"Me"}'
 # -> { "token": "eyJ..." }
 
-TOKEN=<paste token>
-
 # Create a habit
+TOKEN=<paste token>
 curl -X POST http://localhost:8080/api/v1/habits \
-  -H "Authorization: Bearer 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5NjdlZjg3Zi0wZjhkLTQ4ZTItOWQ5YS04MjExZWJlZTE0NWIiLCJlbWFpbCI6Im1lQGV4YW1wbGUuY29tIiwiaXNzIjoiaGFiaXQtdHJhY2tlci1kZXYtbG9jYWwiLCJpYXQiOjE3Nzg0MjY3NDAsImV4cCI6MTc3ODQzMDM0MH0.E0i63uDpMZckEHnXfnPvzozhDFtePlul7HUDFWk52vc'" \
+  -H "Authorization: Bearer $TOKEN" \
   -H 'Content-Type: application/json' \
   -d '{"name":"Drink water","frequency":"DAILY"}'
 
 # List habits
+TOKEN=<paste token>
 curl http://localhost:8080/api/v1/habits \
   -H "Authorization: Bearer $TOKEN"
 ```
@@ -73,6 +73,3 @@ gradle wrapper --gradle-version 8.10
 
 Then commit the generated `gradlew`, `gradlew.bat`, and `gradle/wrapper/`.
 
-## Reading
-
-The book chapters in `../manuscript/` walk through the design decisions in this repo, in order. If you're trying to learn the *why*, read the chapters. If you're trying to learn the *what*, read the code.
